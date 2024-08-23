@@ -1,0 +1,25 @@
+{
+    "name": "ayctor/dto",
+    "type": "library",
+    "require-dev": {
+        "larastan/larastan": "^2.9",
+        "phpstan/extension-installer": "^1.4",
+        "laravel/pint": "^1.17",
+        "pestphp/pest": "^2.35"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ayctor\\Dto\\": "src/",
+            "Ayctor\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    }
+}
