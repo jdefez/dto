@@ -2,17 +2,26 @@
 
 namespace Ayctor\Tests;
 
+use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
-use Ayctor\Dto\Traits\HasArrayableProperties;
+use Ayctor\Dto\Contracts\DtoContract;
+use Ayctor\Dto\Traits\IsDto;
 
-class TestDto
+class TestDto implements DtoContract
 {
-    use HasArrayableProperties;
+    use IsDto;
 
     public function __construct(
-        public string $name,
+        readonly public string $firstname,
+
+        readonly public string $lastname,
+
+        #[Hidden]
+        readonly public string $password,
 
         #[HiddenIfNull]
-        public ?int $id = null,
+        readonly public ?int $id = null,
+
+        readonly public ?string $created_at = null,
     ) {}
 }
