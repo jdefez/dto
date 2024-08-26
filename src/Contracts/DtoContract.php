@@ -7,9 +7,9 @@ interface DtoContract
     /**
      * Create a new instance of the DTO.
      *
-     * @param  array<array-key, mixed>  $attributes
+     * @param  object|array<array-key, mixed>  $attributes
      */
-    public static function make(array $attributes): static;
+    public static function make(object|array $attributes): static;
 
     /**
      * Convert the DTO to an array.

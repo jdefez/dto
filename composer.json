@@ -5,12 +5,12 @@
         "larastan/larastan": "^2.9",
         "phpstan/extension-installer": "^1.4",
         "laravel/pint": "^1.17",
-        "pestphp/pest": "^2.35"
+        "pestphp/pest": "^2.35",
+        "orchestra/testbench": "^8.0"
     },
     "autoload": {
         "psr-4": {
-            "Ayctor\\Dto\\": "src/",
-            "Ayctor\\Tests\\": "tests/"
+            "Ayctor\\Dto\\": "src/"
         }
     },
     "require": {
@@ -22,5 +22,34 @@
             "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ayctor\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "scripts": {
+        "lint": [
+            "@php vendor/bin/pint --ansi",
+            "@php vendor/bin/phpstan analyse --verbose --ansi"
+        ],
+        "test": [
+            "@php vendor/bin/pest"
+        ],
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ]
     }
 }

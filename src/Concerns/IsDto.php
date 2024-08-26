@@ -1,10 +1,12 @@
 <?php
 
-namespace Ayctor\Dto\Traits;
+namespace Ayctor\Dto\Concerns;
 
 use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
 use Ayctor\Dto\Attributes\StrToCarbon;
+use Ayctor\Dto\Contracts\IsCastContract;
+use ReflectionParameter;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionProperty;
@@ -12,9 +14,9 @@ use ReflectionProperty;
 trait IsDto
 {
     /**
-     * @param  array<array-key, mixed>  $attributes
+     * @param  object|array<array-key, mixed>  $attributes
      */
-    public static function make(array $attributes): static
+    public static function make(object|array $attributes): static
     {
         $constructor = (new ReflectionClass(static::class))->getConstructor();
         $properties = $constructor->getParameters();
@@ -23,7 +25,12 @@ trait IsDto
 
         foreach ($properties as $property) {
             $name = $property->getName();
-            $value = $attributes[$name] ?? $property->getDefaultValue();
+            $value = data_get($attributes, $name) ?? $property->getDefaultValue() ?? null;
+            // Casts
+
+            if (self::hasAttribute(StrToCarbon::class, $property)) {
+                $value = self::castUsing(StrToCarbon::class, $property, $value);
+            }
 
             $args[] = $value;
         }
@@ -50,11 +57,6 @@ trait IsDto
                 continue;
             }
 
-            // Casts
-
-            if ($this->hasAttribute(StrToCarbon::class, $attributes)) {
-                $value = $this->castUsing(StrToCarbon::class, $attributes, $value);
-            }
 
             $return[$name] = $value;
         }
@@ -79,7 +81,7 @@ trait IsDto
     /**
      * @param  array<ReflectionAttribute>  $attributes
      */
-    private function getAttributesNames(array $attributes): array
+    private static function getAttributesNames(array $attributes): array
     {
         return array_map(fn ($attribute) => $attribute->getName(), $attributes);
     }
@@ -87,17 +89,15 @@ trait IsDto
     /**
      * @param  array<ReflectionAttribute>  $attributes
      */
-    private function castUsing(string $attribute, array $attributes, mixed $value): mixed
+    private static function castUsing(string $attribute, ReflectionParameter $property, mixed $value): mixed
     {
-        $instance = $this->getAttribute(StrToCarbon::class, $attributes)?->newInstance();
+        $attributes = $property->getAttributes();
+        $instance = self::getAttribute(StrToCarbon::class, $attributes)?->newInstance();
+        $ref = new ReflectionClass($instance);
 
-        if (! $instance) {
+        if (! $instance || ! $ref->implementsInterface(IsCastContract::class)) {
             return $value;
         }
-
-        // TODO:
-        // - check the attribute instance is an instance of IsCastContract
-        // - implement the test
 
         return $instance->format($value);
     }
@@ -105,7 +105,7 @@ trait IsDto
     /**
      * @param  array<int,mixed>  $attributes
      */
-    private function getAttribute(string $attribute, array $attributes): ?ReflectionAttribute
+    private static function getAttribute(string $attribute, array $attributes): ?ReflectionAttribute
     {
         foreach ($attributes as $attr) {
             if ($attr->getName() === $attribute) {
@@ -119,8 +119,10 @@ trait IsDto
     /**
      * @param  array<ReflectionAttribute>  $attributes
      */
-    private function hasAttribute(string $attribute, array $attributes): bool
+    private static function hasAttribute(string $attribute, ReflectionParameter $property): bool
     {
-        return in_array($attribute, $this->getAttributesNames($attributes));
+        $attributes = $property->getAttributes();
+
+        return in_array($attribute, self::getAttributesNames($attributes));
     }
 }

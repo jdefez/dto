@@ -3,9 +3,10 @@
 namespace Ayctor\Dto\Attributes;
 
 use Attribute;
+use Ayctor\Dto\Contracts\IsCastContract;
 use Carbon\Carbon;
 
-#[Attribute(Attribute::TARGET_PROPERTY)]
+#[Attribute(Attribute::TARGET_PARAMETER)]
 class StrToCarbon implements IsCastContract
 {
     public function __construct(
@@ -13,16 +14,16 @@ class StrToCarbon implements IsCastContract
         public ?string $timezone = null,
     ) {}
 
-    public function format(?string $input): ?Carbon
+    public function format(mixed $input): ?Carbon
     {
         if (! $input) {
             return null;
         }
 
-        if ($this->from_format !== null) {
-            $instance = Carbon::createFromFormat($this->from_format, $input);
-        } else {
-            $instance = Carbon::parse($input);
+        $instance = $this->getInstance($input);
+
+        if (! $instance) {
+            return null;
         }
 
         if ($this->timezone !== null) {
@@ -30,5 +31,14 @@ class StrToCarbon implements IsCastContract
         }
 
         return $instance;
+    }
+
+    private function getInstance(string $input): Carbon|false
+    {
+        if ($this->from_format) {
+            return Carbon::createFromFormat($this->from_format, $input);
+        }
+
+        return Carbon::parse($input);
     }
 }
