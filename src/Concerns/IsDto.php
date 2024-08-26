@@ -6,9 +6,9 @@ use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
 use Ayctor\Dto\Attributes\StrToCarbon;
 use Ayctor\Dto\Contracts\IsCastContract;
-use ReflectionParameter;
 use ReflectionAttribute;
 use ReflectionClass;
+use ReflectionParameter;
 use ReflectionProperty;
 
 trait IsDto
@@ -56,7 +56,6 @@ trait IsDto
             if ($this->propertyIsHidden($attributes, $value)) {
                 continue;
             }
-
 
             $return[$name] = $value;
         }
