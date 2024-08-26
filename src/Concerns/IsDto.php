@@ -2,6 +2,7 @@
 
 namespace Ayctor\Dto\Concerns;
 
+use Ayctor\Dto\Attributes\ArrayToCollection;
 use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
 use Ayctor\Dto\Attributes\StrToCarbon;
@@ -30,6 +31,10 @@ trait IsDto
 
             if (self::hasAttribute(StrToCarbon::class, $property)) {
                 $value = self::castUsing(StrToCarbon::class, $property, $value);
+            }
+
+            if (self::hasAttribute(ArrayToCollection::class, $property)) {
+                $value = self::castUsing(ArrayToCollection::class, $property, $value);
             }
 
             $args[] = $value;
@@ -87,11 +92,12 @@ trait IsDto
 
     /**
      * @param  array<ReflectionAttribute>  $attributes
+     * @param class-string $attribute
      */
     private static function castUsing(string $attribute, ReflectionParameter $property, mixed $value): mixed
     {
         $attributes = $property->getAttributes();
-        $instance = self::getAttribute(StrToCarbon::class, $attributes)?->newInstance();
+        $instance = self::getAttribute($attribute, $attributes)?->newInstance();
         $ref = new ReflectionClass($instance);
 
         if (! $instance || ! $ref->implementsInterface(IsCastContract::class)) {
@@ -103,6 +109,7 @@ trait IsDto
 
     /**
      * @param  array<int,mixed>  $attributes
+     * @param class-string $attribute
      */
     private static function getAttribute(string $attribute, array $attributes): ?ReflectionAttribute
     {

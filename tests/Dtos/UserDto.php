@@ -2,17 +2,23 @@
 
 namespace Ayctor\Tests\Dtos;
 
+use Ayctor\Dto\Attributes\ArrayToCollection;
 use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
 use Ayctor\Dto\Attributes\StrToCarbon;
 use Ayctor\Dto\Concerns\IsDto;
 use Ayctor\Dto\Contracts\DtoContract;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Ayctor\Tests\Dtos\RolesDto;
 
 final class UserDto implements DtoContract
 {
     use IsDto;
 
+    /**
+     * @param Collection<int, RolesDto> $roles
+     */
     public function __construct(
         readonly public string $firstname,
 
@@ -20,6 +26,9 @@ final class UserDto implements DtoContract
 
         #[StrToCarbon('d/m/Y H:i:s', 'Europe/Paris')]
         readonly public Carbon $created_at,
+
+        #[ArrayToCollection(RolesDto::class)]
+        readonly public Collection $roles,
 
         #[Hidden]
         readonly public ?string $password = null,

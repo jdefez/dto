@@ -4,6 +4,7 @@ namespace Ayctor\Tests\Unit;
 
 use Ayctor\Tests\Dtos\UserDto;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 test('toArray returns an array', function () {
     $dto = UserDto::make([
@@ -11,6 +12,10 @@ test('toArray returns an array', function () {
         'lastname' => 'Doe',
         'password' => '$password',
         'created_at' => '01/01/2021 00:00:00',
+        'roles' => [
+            ['name' => 'admin', 'id' => 1],
+            ['name' => 'user', 'id' => 2],
+        ],
     ]);
 
     $result = $dto->toArray();
@@ -18,11 +23,5 @@ test('toArray returns an array', function () {
     expect($result['firstname'])->toBe($result['firstname']);
     expect($result['lastname'])->toBe($result['lastname']);
     expect($result['created_at'])->toBeInstanceOf(Carbon::class);
-
-    // expect($dto)
-    //     ->toArray()
-    //     ->toEqualCanonicalizing([
-    //         'firstname' => 'John',
-    //         'lastname' => 'Doe',
-    //     ]);
+    expect($result['roles'])->toBeInstanceOf(Collection::class);
 });

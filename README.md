@@ -1,8 +1,19 @@
 # Ayctor Dto
 
-Is designed to convert a class to a Data Transfer Object by simply adding a trait (IsDto) and customizing its properties with provided Attributes.
+Is designed to convert a class to a Data Transfer Object by simply adding a trait
+(IsDto) and customizing its properties with provided Attributes.
+
+Methods provided:
+ * (static) make(object|array) to build a dto class from an array
+ * and a toArray(): array method
+
+It can :
+ * Hide some attributes when the method toArray() is called
+ * Cast the dto properties using php Attributes
 
 For example
+
+Defining a UserDto class
 
 ```php
 <?php
@@ -32,7 +43,7 @@ class UserDto implements DtoContract
 }
 ```
 
-# Usage
+Using the UserDto class
 
 ```php
 $dto = UserDto::make([
@@ -53,13 +64,10 @@ var_dump($dto->toArray());
 
 # Available attributes
 
-| Name | Description |
-| --- | --- |
-| Hidden | Hides the attribute |
-| HiddenIfNull | Hides the attribute when its value is null |
-| StrToCarbon(?string $from_format, ?string $timezone) | Casts the attribute to a Carbon instance |
-
-# Todo:
-  - use spatie template ?
-  - implement casts (i.e: strToCarbon(str, format, timezone))
+| Name | Description | Parameters |
+| --- | --- | --- |
+| Hidden | Hides the attribute when toArray() is applied | - |
+| HiddenIfNull | Hides the attribute when  when toArray() is applied and its value is null | - |
+| StrToCarbon | Casts the attribute to a Carbon instance | @from_format (?string) @timezone (?string) |
+| ArrayToCollection | Casts the attribute to a Collection | @dto (?class-string) |
 
