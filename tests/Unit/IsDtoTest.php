@@ -10,6 +10,15 @@ test('toArray returns an array', function () {
     $dto = UserDto::make([
         'firstname' => 'John',
         'lastname' => 'Doe',
+        'manager' => [
+            'firstname' => 'Jimmy',
+            'lastname' => 'Pain',
+            'password' => 'jp$password',
+            'created_at' => '02/01/2021 00:00:00',
+            'roles' => [
+                ['name' => 'manager', 'id' => 3],
+            ],
+        ],
         'password' => '$password',
         'created_at' => '01/01/2021 00:00:00',
         'roles' => [
@@ -24,4 +33,5 @@ test('toArray returns an array', function () {
     expect($result['lastname'])->toBe($result['lastname']);
     expect($result['created_at'])->toBeInstanceOf(Carbon::class);
     expect($result['roles'])->toBeInstanceOf(Collection::class);
+    expect($result['manager'])->toBeInstanceOf(UserDto::class);
 });

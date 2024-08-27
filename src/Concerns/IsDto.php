@@ -6,9 +6,11 @@ use Ayctor\Dto\Attributes\ArrayToCollection;
 use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
 use Ayctor\Dto\Attributes\StrToCarbon;
+use Ayctor\Dto\Attributes\ToDto;
 use Ayctor\Dto\Contracts\IsCastContract;
 use ReflectionAttribute;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionParameter;
 use ReflectionProperty;
 
@@ -26,7 +28,8 @@ trait IsDto
 
         foreach ($properties as $property) {
             $name = $property->getName();
-            $value = data_get($attributes, $name) ?? $property->getDefaultValue() ?? null;
+            $value = data_get($attributes, $name) ?? self::getPropertyDefaultValue($property);
+
             // Casts
 
             if (self::hasAttribute(StrToCarbon::class, $property)) {
@@ -35,6 +38,10 @@ trait IsDto
 
             if (self::hasAttribute(ArrayToCollection::class, $property)) {
                 $value = self::castUsing(ArrayToCollection::class, $property, $value);
+            }
+
+            if (self::hasAttribute(ToDto::class, $property)) {
+                $value = self::castUsing(ToDto::class, $property, $value);
             }
 
             $args[] = $value;
@@ -130,5 +137,14 @@ trait IsDto
         $attributes = $property->getAttributes();
 
         return in_array($attribute, self::getAttributesNames($attributes));
+    }
+
+    private static function getPropertyDefaultValue(ReflectionParameter $property): mixed
+    {
+        try {
+            return $property->getDefaultValue();
+        } catch (ReflectionException) {
+            return null;
+        }
     }
 }

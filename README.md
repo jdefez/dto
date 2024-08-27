@@ -3,7 +3,7 @@
 Is designed to convert a class to a Data Transfer Object by simply adding a trait
 (IsDto) and customizing its properties with provided Attributes.
 
-Methods provided:
+## Methods provided:
  * (static) make(object|array) to build a dto class from an array
  * and a toArray(): array method
 
@@ -11,7 +11,7 @@ It can :
  * Hide some attributes when the method toArray() is called
  * Cast the dto properties using php Attributes
 
-For example
+## example
 
 Defining a UserDto class
 
@@ -52,9 +52,9 @@ $dto = UserDto::make([
     'password' => '$password',
 ])
 
-var_dump($dto->toArray());
+dump($dto->toArray());
 
-// outputs
+// output
 //
 // [
 //     'firstname' => 'John',
@@ -68,6 +68,7 @@ var_dump($dto->toArray());
 | --- | --- | --- |
 | Hidden | Hides the attribute when toArray() is applied | - |
 | HiddenIfNull | Hides the attribute when  when toArray() is applied and its value is null | - |
-| StrToCarbon | Casts the attribute to a Carbon instance | @from_format (?string) @timezone (?string) |
+| StrToCarbon | Casts the attribute to a Carbon instance | @from_format (?string), @timezone (?string) |
 | ArrayToCollection | Casts the attribute to a Collection | @dto (?class-string) |
+| ToDto | Casts the attribute to a Dto | @dto (class-string) |
 

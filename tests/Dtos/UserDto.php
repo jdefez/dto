@@ -6,6 +6,7 @@ use Ayctor\Dto\Attributes\ArrayToCollection;
 use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
 use Ayctor\Dto\Attributes\StrToCarbon;
+use Ayctor\Dto\Attributes\ToDto;
 use Ayctor\Dto\Concerns\IsDto;
 use Ayctor\Dto\Contracts\DtoContract;
 use Carbon\Carbon;
@@ -28,6 +29,9 @@ final class UserDto implements DtoContract
 
         #[ArrayToCollection(RolesDto::class)]
         readonly public Collection $roles,
+
+        #[ToDto(UserDto::class)]
+        readonly public ?UserDto $manager = null,
 
         #[Hidden]
         readonly public ?string $password = null,
