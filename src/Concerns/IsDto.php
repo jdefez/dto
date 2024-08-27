@@ -92,7 +92,7 @@ trait IsDto
 
     /**
      * @param  array<ReflectionAttribute>  $attributes
-     * @param class-string $attribute
+     * @param  class-string  $attribute
      */
     private static function castUsing(string $attribute, ReflectionParameter $property, mixed $value): mixed
     {
@@ -109,7 +109,7 @@ trait IsDto
 
     /**
      * @param  array<int,mixed>  $attributes
-     * @param class-string $attribute
+     * @param  class-string  $attribute
      */
     private static function getAttribute(string $attribute, array $attributes): ?ReflectionAttribute
     {

@@ -21,8 +21,9 @@ class ArrayToCollection implements IsCastContract
 
     /**
      * @param  array<mixed>  $input
-     * @throws InvalidArgumentException
      * @return Collection<int, mixed>
+     *
+     * @throws InvalidArgumentException
      */
     public function format(mixed $input): ?Collection
     {
