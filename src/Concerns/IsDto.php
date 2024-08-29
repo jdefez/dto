@@ -5,10 +5,13 @@ namespace Ayctor\Dto\Concerns;
 use Ayctor\Dto\Attributes\ArrayToCollection;
 use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
+use Ayctor\Dto\Attributes\IsPositive;
 use Ayctor\Dto\Attributes\StrToCarbon;
 use Ayctor\Dto\Attributes\ToDto;
 use Ayctor\Dto\Attributes\ToEnum;
 use Ayctor\Dto\Contracts\IsCastContract;
+use Ayctor\Dto\Contracts\IsValidatorContract;
+use Ayctor\Dto\Exceptions\ValidationException;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
@@ -30,6 +33,12 @@ trait IsDto
         foreach ($properties as $property) {
             $name = $property->getName();
             $value = data_get($attributes, $name) ?? self::getPropertyDefaultValue($property);
+
+            // Validation
+
+            if (self::hasAttribute(IsPositive::class, $property)) {
+                self::validateUsing(IsPositive::class, $property, $value);
+            }
 
             // Casts
 
@@ -117,6 +126,25 @@ trait IsDto
         }
 
         return $instance->format($value);
+    }
+
+    /**
+     * @param  array<ReflectionAttribute>  $attributes
+     * @param  class-string  $attribute
+     *
+     * @throws ValidationException
+     */
+    private static function validateUsing(string $attribute, ReflectionParameter $property, mixed $value): void
+    {
+        $attributes = $property->getAttributes();
+        $instance = self::getAttribute($attribute, $attributes)?->newInstance();
+        $ref = new ReflectionClass($instance);
+
+        if (! $instance || ! $ref->implementsInterface(IsValidatorContract::class)) {
+            return;
+        }
+
+        $instance->isValid($value, $property->getName());
     }
 
     /**

@@ -9,11 +9,11 @@ ___
 
  - [x] test: cast attribute + visibility attribute
  - Cast attributes: 
-  - [ ] implement fallback value for all casts attributes,
+  - [x] implement fallback value for all casts attributes,
   * [ ] ToFloat,
   * [ ] ToPeriod(start_attribute_name, end_attribute_name)
  - Validation attriubtes: 
-  * [ ] PositiveInt
+  * [ ] IsPositive **(todo: test)**
 
  ___
 
