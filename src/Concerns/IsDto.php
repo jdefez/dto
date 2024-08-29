@@ -7,6 +7,7 @@ use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
 use Ayctor\Dto\Attributes\StrToCarbon;
 use Ayctor\Dto\Attributes\ToDto;
+use Ayctor\Dto\Attributes\ToEnum;
 use Ayctor\Dto\Contracts\IsCastContract;
 use ReflectionAttribute;
 use ReflectionClass;
@@ -42,6 +43,10 @@ trait IsDto
 
             if (self::hasAttribute(ToDto::class, $property)) {
                 $value = self::castUsing(ToDto::class, $property, $value);
+            }
+
+            if (self::hasAttribute(ToEnum::class, $property)) {
+                $value = self::castUsing(ToEnum::class, $property, $value);
             }
 
             $args[] = $value;

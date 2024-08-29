@@ -6,7 +6,15 @@ Is designed to convert a class to a Data Transfer Object by simply adding a trai
 ___
 
 ## TODO:
+
  - test: cast attribute + visibility attribute
+ - Cast attributes: 
+  - [ ] implement fallback value for all casts attributes,
+  * [ ] ToFloat,
+  * [ ] ToPeriod(start_attribute_name, end_attribute_name)
+ - Validation attriubtes: 
+  * [ ] PositiveInt
+
  ___
 
 **Methods provided:**
@@ -79,3 +87,4 @@ dump($dto->toArray());
 | StrToCarbon | Casts the attribute to a Carbon instance | @from_format (?string), @timezone (?string) |
 | ArrayToCollection | Casts the attribute to a Collection | @dto (?class-string) |
 | ToDto | Casts the attribute to a Dto | @dto (class-string) |
+| ToEnum | Casts the attribute to enum | @enum (class-string) |

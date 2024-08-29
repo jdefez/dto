@@ -1,11 +1,11 @@
 <?php
 
-namespace Ayctor\Tests\Dtos;
+namespace Ayctor\Tests\Samples;
 
 use Ayctor\Dto\Concerns\IsDto;
 use Ayctor\Dto\Contracts\DtoContract;
 
-class RolesDto implements DtoContract
+class RoleDto implements DtoContract
 {
     use IsDto;
 

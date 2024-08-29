@@ -20,7 +20,7 @@ class ArrayToCollection implements IsCastContract
     ) {}
 
     /**
-     * @param  array<mixed>  $input
+     * @param  array<int, mixed>  $input
      * @return Collection<int, mixed>
      *
      * @throws InvalidArgumentException
@@ -32,10 +32,10 @@ class ArrayToCollection implements IsCastContract
         }
 
         if ($this->dto && $this->dtoIsValid()) {
-            $input = array_map(
-                fn ($item) => $this->dto::make($item),
-                $input
-            );
+            return (new Collection($input))
+                ->map(
+                    fn ($item) => $this->dto::make($item),
+                );
         }
 
         return new Collection($input);
