@@ -10,8 +10,6 @@ use Ayctor\Dto\Attributes\ToDto;
 use Ayctor\Dto\Attributes\ToEnum;
 use Ayctor\Dto\Concerns\IsDto;
 use Ayctor\Dto\Contracts\DtoContract;
-use Ayctor\Tests\Samples\RoleDto;
-use Ayctor\Tests\Samples\UserDto;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -27,6 +25,7 @@ final class UserDto implements DtoContract
 
         readonly public string $lastname,
 
+        #[Hidden]
         #[ToEnum(UserStatus::class)]
         readonly public UserStatus $status,
 

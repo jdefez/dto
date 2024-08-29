@@ -36,7 +36,7 @@ test('toArray returns an array', function () {
     expect($dto->password)->toBe('$password');
 
     // NOTE: casted properties
-    
+
     expect($dto->created_at)->toBeInstanceOf(Carbon::class);
     expect($dto->roles)->toBeInstanceOf(Collection::class);
     expect($dto->roles->first())->toBeInstanceOf(RoleDto::class);
@@ -45,8 +45,9 @@ test('toArray returns an array', function () {
 
     expect($dto->toArray())->toBeArray();
 
-    // NOTE: hidden properties
-    
+    // NOTE: hidden when to array is called
+
     expect($dto->toArray())->not()->toHaveKey('password');
+    expect($dto->toArray())->not()->toHaveKey('status');
     expect($dto->toArray())->not()->toHaveKey('id');
 });

@@ -7,7 +7,7 @@ ___
 
 ## TODO:
 
- - test: cast attribute + visibility attribute
+ - [x] test: cast attribute + visibility attribute
  - Cast attributes: 
   - [ ] implement fallback value for all casts attributes,
   * [ ] ToFloat,

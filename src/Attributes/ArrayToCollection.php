@@ -17,28 +17,32 @@ class ArrayToCollection implements IsCastContract
      */
     public function __construct(
         public ?string $dto = null,
+        public mixed $default = null,
     ) {}
 
     /**
-     * @param  array<int, mixed>  $input
-     * @return Collection<int, mixed>
+     * @return ?Collection<int, mixed>
      *
      * @throws InvalidArgumentException
      */
     public function format(mixed $input): ?Collection
     {
         if (! $input || ! is_array($input)) {
-            return null;
+            return $this->default;
         }
 
-        if ($this->dto && $this->dtoIsValid()) {
-            return (new Collection($input))
-                ->map(
-                    fn ($item) => $this->dto::make($item),
-                );
+        if (! $this->dto) {
+            return new Collection($input);
         }
 
-        return new Collection($input);
+        if ($this->dtoIsValid()) {
+            // @phpstan-ignore-next-line
+            return (new Collection($input))->map(
+                fn ($item) => $this->dto::make($item),
+            );
+        }
+
+        return $this->default;
     }
 
     /**
@@ -47,7 +51,7 @@ class ArrayToCollection implements IsCastContract
     private function dtoIsValid(): bool
     {
         if (! $this->dto) {
-            return true;
+            return false;
         }
 
         $ref = new ReflectionClass($this->dto);

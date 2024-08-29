@@ -13,6 +13,7 @@ class ToDto implements IsCastContract
      */
     public function __construct(
         public string $dto,
+        public mixed $default = null,
     ) {}
 
     public function format(mixed $input): mixed
@@ -21,6 +22,6 @@ class ToDto implements IsCastContract
             return $this->dto::make($input);
         }
 
-        return null;
+        return $this->default;
     }
 }

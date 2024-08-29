@@ -12,18 +12,19 @@ class StrToCarbon implements IsCastContract
     public function __construct(
         public ?string $from_format = null,
         public ?string $timezone = null,
+        public mixed $default = null,
     ) {}
 
     public function format(mixed $input): ?Carbon
     {
         if (! $input) {
-            return null;
+            return $this->default;
         }
 
         $instance = $this->getInstance($input);
 
         if (! $instance) {
-            return null;
+            return $this->default;
         }
 
         if ($this->timezone !== null) {
