@@ -7,25 +7,60 @@ ___
 
 ## TODO:
 
- - [x] test: cast attribute + visibility attribute
- - Cast attributes: 
+### Tests
+  * [x] test cast attribute + visibility attribute
+
+### Cast attributes: 
   - [x] implement fallback value for all casts attributes,
   * [ ] ToFloat,
   * [ ] ToPeriod(start_attribute_name, end_attribute_name)
- - Validation attriubtes: 
-  * [ ] IsPositive **(todo: test)**
+
+### Validation attriubtes: 
+  * [x] IsPositive
+  - [ ] IsNegative
 
  ___
 
-**Methods provided:**
+## Methods provided
 
- * (static) make(object|array) to build a dto class from an array
- * and a toArray(): array method
+ * (static) _make(object|array): DtoContract_ to build a dto class from an array or object
+ * _toArray(): array_ method
 
 **It can:**
 
+ * Cast the input values before the class properties instanciation through the _make_ method;
+ - Validate input values;
  * Hide some attributes when the method toArray() is called
- * Cast the dto properties using php Attributes
+
+# Available attributes
+
+## Casts
+
+Casts the input value when instanciating the class properties.
+
+| Name | Description | Parameters |
+| --- | --- | --- |
+| StrToCarbon | Casts the attribute to a Carbon instance | @from_format (?string), @timezone (?string) |
+| ArrayToCollection | Casts the attribute to a Collection | @dto (?class-string) |
+| ToDto | Casts the attribute to a Dto | @dto (class-string) |
+| ToEnum | Casts the attribute to enum | @enum (class-string) |
+
+## Validators
+
+Validate the input values before class properties instanciation.
+
+| Name | Description | Parameters |
+| --- | --- | --- |
+| IsPositive | The input value is positive | - |
+
+## visibility
+
+The attribute are absente for the array returned by the method toArray.
+
+| Name | Description | Parameters |
+| --- | --- | --- |
+| Hidden | Hides the attribute when toArray() is applied | - |
+| HiddenIfNull | Hides the attribute when  when toArray() is applied and its value is null | - |
 
 ## example
 
@@ -77,14 +112,3 @@ dump($dto->toArray());
 //     'lastname' => 'Doe',
 // ]
 ```
-
-# Available attributes
-
-| Name | Description | Parameters |
-| --- | --- | --- |
-| Hidden | Hides the attribute when toArray() is applied | - |
-| HiddenIfNull | Hides the attribute when  when toArray() is applied and its value is null | - |
-| StrToCarbon | Casts the attribute to a Carbon instance | @from_format (?string), @timezone (?string) |
-| ArrayToCollection | Casts the attribute to a Collection | @dto (?class-string) |
-| ToDto | Casts the attribute to a Dto | @dto (class-string) |
-| ToEnum | Casts the attribute to enum | @enum (class-string) |
