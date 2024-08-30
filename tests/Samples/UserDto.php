@@ -5,6 +5,7 @@ namespace Ayctor\Tests\Samples;
 use Ayctor\Dto\Attributes\ArrayToCollection;
 use Ayctor\Dto\Attributes\Hidden;
 use Ayctor\Dto\Attributes\HiddenIfNull;
+use Ayctor\Dto\Attributes\IsPositive;
 use Ayctor\Dto\Attributes\StrToCarbon;
 use Ayctor\Dto\Attributes\ToDto;
 use Ayctor\Dto\Attributes\ToEnum;
@@ -25,6 +26,9 @@ final class UserDto implements DtoContract
 
         readonly public string $lastname,
 
+        #[IsPositive]
+        readonly public int $age,
+
         #[Hidden]
         #[ToEnum(UserStatus::class)]
         readonly public UserStatus $status,
@@ -33,7 +37,7 @@ final class UserDto implements DtoContract
         readonly public Carbon $created_at,
 
         #[ArrayToCollection(RoleDto::class)]
-        readonly public Collection $roles,
+        readonly public ?Collection $roles,
 
         #[ToDto(UserDto::class)]
         readonly public ?UserDto $manager = null,
