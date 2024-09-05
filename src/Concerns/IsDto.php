@@ -2,13 +2,13 @@
 
 namespace Ayctor\Dto\Concerns;
 
-use Ayctor\Dto\Attributes\ArrayToCollection;
-use Ayctor\Dto\Attributes\Hidden;
-use Ayctor\Dto\Attributes\HiddenIfNull;
-use Ayctor\Dto\Attributes\IsPositive;
-use Ayctor\Dto\Attributes\StrToCarbon;
-use Ayctor\Dto\Attributes\ToDto;
-use Ayctor\Dto\Attributes\ToEnum;
+use Ayctor\Dto\Attributes\Casts\ArrayToCollection;
+use Ayctor\Dto\Attributes\Visibility\Hidden;
+use Ayctor\Dto\Attributes\Visibility\HiddenIfNull;
+use Ayctor\Dto\Attributes\Validators\IsPositive;
+use Ayctor\Dto\Attributes\Casts\StrToCarbon;
+use Ayctor\Dto\Attributes\Casts\ToDto;
+use Ayctor\Dto\Attributes\Casts\ToEnum;
 use Ayctor\Dto\Contracts\IsCastContract;
 use Ayctor\Dto\Contracts\IsValidatorContract;
 use Ayctor\Dto\Exceptions\ValidationException;

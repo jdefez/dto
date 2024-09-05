@@ -1,6 +1,6 @@
 <?php
 
-namespace Ayctor\Dto\Attributes;
+namespace Ayctor\Dto\Attributes\Validators;
 
 use Attribute;
 use Ayctor\Dto\Contracts\IsValidatorContract;

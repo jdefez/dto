@@ -1,11 +1,11 @@
 <?php
 
-namespace Ayctor\Dto\Attributes;
+namespace Ayctor\Dto\Attributes\Visibility;
 
 use Attribute;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
-class Hidden
+class HiddenIfNull
 {
     public function __construct(
     ) {}
