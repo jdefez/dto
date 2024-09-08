@@ -7,6 +7,8 @@ ___
 
 ## TODO:
 
+### Refactor
+
 Refactor/optimize IsDto with : `$attrs = $reflector->getAttributes(BaseAttribute::class, \ReflectionAttribute::IS_INSTANCEOF);`
 cf: [PHP 8.0: Attributes](https://php.watch/versions/8.0/attributes)
 > **At the moment, only \ReflectionAttribute::IS_INSTANCEOF is available.**
@@ -23,7 +25,7 @@ print_r(array_map(fn($attribute) => $attribute->getName(), $attributes));
 ### Tests
   * [x] test cast attribute + visibility attribute
 
-### Cast attributes: 
+### Casts attributes: 
   - [x] implement fallback value for all casts attributes,
   * [ ] ToFloat,
   - [ ] ToCast,

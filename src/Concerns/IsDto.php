@@ -11,7 +11,9 @@ use Ayctor\Dto\Attributes\Casts\ToDto;
 use Ayctor\Dto\Attributes\Casts\ToEnum;
 use Ayctor\Dto\Contracts\IsCastContract;
 use Ayctor\Dto\Contracts\IsValidatorContract;
+use Ayctor\Dto\Contracts\IsVisibilityContract;
 use Ayctor\Dto\Exceptions\ValidationException;
+use Illuminate\Support\Collection;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
@@ -34,29 +36,9 @@ trait IsDto
             $name = $property->getName();
             $value = data_get($attributes, $name) ?? self::getPropertyDefaultValue($property);
 
-            // Validation
+            self::handleValidations($property, $value);
 
-            if (self::hasAttribute(IsPositive::class, $property)) {
-                self::validateUsing(IsPositive::class, $property, $value);
-            }
-
-            // Casts
-
-            if (self::hasAttribute(StrToCarbon::class, $property)) {
-                $value = self::castUsing(StrToCarbon::class, $property, $value);
-            }
-
-            if (self::hasAttribute(ArrayToCollection::class, $property)) {
-                $value = self::castUsing(ArrayToCollection::class, $property, $value);
-            }
-
-            if (self::hasAttribute(ToDto::class, $property)) {
-                $value = self::castUsing(ToDto::class, $property, $value);
-            }
-
-            if (self::hasAttribute(ToEnum::class, $property)) {
-                $value = self::castUsing(ToEnum::class, $property, $value);
-            }
+            $value = self::handleCasts($property, $value);
 
             $args[] = $value;
         }
@@ -75,13 +57,12 @@ trait IsDto
         $properties = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
 
         foreach ($properties as $property) {
-            $name = $property->getName();
-            $value = $property->getValue($this);
-            $attributes = $property->getAttributes();
-
-            if ($this->propertyIsHidden($attributes, $value)) {
+            if ($this->propertyIsHidden($property)) {
                 continue;
             }
+
+            $name = $property->getName();
+            $value = $property->getValue($this);
 
             $return[$name] = $value;
         }
@@ -92,92 +73,57 @@ trait IsDto
     /**
      * @param  array<ReflectionAttribute>  $attributes
      */
-    private function propertyIsHidden(array $attributes, mixed $value): bool
+    private function propertyIsHidden(ReflectionProperty $property): bool
     {
-        if ($value === null
-            && in_array(HiddenIfNull::class, $this->getAttributesNames($attributes))
-        ) {
-            return true;
+        return self::getAttributesByType($property, IsVisibilityContract::class)
+            ->isNotEmpty();
+    }
+
+    private static function handleCasts(
+        ReflectionParameter $parameter,
+        mixed $value
+    ): mixed {
+        foreach (self::getAttributesByType($parameter, IsCastContract::class) as $attribute) {
+            $value = $attribute->newInstance()->format($value);
         }
 
-        return in_array(Hidden::class, $this->getAttributesNames($attributes));
+        return $value;
     }
 
-    /**
-     * @param  array<ReflectionAttribute>  $attributes
-     */
-    private static function getAttributesNames(array $attributes): array
-    {
-        return array_map(fn ($attribute) => $attribute->getName(), $attributes);
-    }
+    private static function handleValidations(
+        ReflectionParameter $parameter,
+        mixed $value
+    ): void {
 
-    /**
-     * @param  array<ReflectionAttribute>  $attributes
-     * @param  class-string  $attribute
-     */
-    private static function castUsing(string $attribute, ReflectionParameter $property, mixed $value): mixed
-    {
-        $attributes = $property->getAttributes();
-        $instance = self::getAttribute($attribute, $attributes)?->newInstance();
-        $ref = new ReflectionClass($instance);
-
-        if (! $instance || ! $ref->implementsInterface(IsCastContract::class)) {
-            return $value;
+        foreach (self::getAttributesByType($parameter, IsValidatorContract::class) as $attribute) {
+            $attribute->newInstance()->isValid(
+                $value,
+                $parameter->getName()
+            );
         }
-
-        return $instance->format($value);
     }
 
-    /**
-     * @param  array<ReflectionAttribute>  $attributes
-     * @param  class-string  $attribute
-     *
-     * @throws ValidationException
-     */
-    private static function validateUsing(string $attribute, ReflectionParameter $property, mixed $value): void
-    {
-        $attributes = $property->getAttributes();
-        $instance = self::getAttribute($attribute, $attributes)?->newInstance();
-        $ref = new ReflectionClass($instance);
-
-        if (! $instance || ! $ref->implementsInterface(IsValidatorContract::class)) {
-            return;
-        }
-
-        $instance->isValid($value, $property->getName());
-    }
-
-    /**
-     * @param  array<int,mixed>  $attributes
-     * @param  class-string  $attribute
-     */
-    private static function getAttribute(string $attribute, array $attributes): ?ReflectionAttribute
-    {
-        foreach ($attributes as $attr) {
-            if ($attr->getName() === $attribute) {
-                return $attr;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param  array<ReflectionAttribute>  $attributes
-     */
-    private static function hasAttribute(string $attribute, ReflectionParameter $property): bool
-    {
-        $attributes = $property->getAttributes();
-
-        return in_array($attribute, self::getAttributesNames($attributes));
-    }
-
-    private static function getPropertyDefaultValue(ReflectionParameter $property): mixed
-    {
+    private static function getPropertyDefaultValue(
+        ReflectionParameter $property
+    ): mixed {
         try {
             return $property->getDefaultValue();
         } catch (ReflectionException) {
             return null;
         }
+    }
+
+    /**
+     * @param class-string $type
+     * @return Collection<ReflectionAttribute>
+     */
+    private static function getAttributesByType(
+        ReflectionParameter|ReflectionProperty $property,
+        string $type
+    ): Collection {
+        return new Collection($property->getAttributes(
+            $type,
+            ReflectionAttribute::IS_INSTANCEOF
+        ));
     }
 }
