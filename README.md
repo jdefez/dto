@@ -7,34 +7,24 @@ ___
 
 ## TODO:
 
-### Refactor
-
-Refactor/optimize IsDto with : `$attrs = $reflector->getAttributes(BaseAttribute::class, \ReflectionAttribute::IS_INSTANCEOF);`
-cf: [PHP 8.0: Attributes](https://php.watch/versions/8.0/attributes)
-> **At the moment, only \ReflectionAttribute::IS_INSTANCEOF is available.**
-> If \ReflectionAttribute::IS_INSTANCEOF is passed, the return array will contain
-> Attribute with same class name or classes that extends or implements
-> the provided name (i.e all classes that fulfull instanceOf $name).
-
-```php
-$property = new ReflectionProperty('Basket', 'apple');
-$attributes = $property->getAttributes(ColorContract::class, ReflectionAttribute::IS_INSTANCEOF);
-print_r(array_map(fn($attribute) => $attribute->getName(), $attributes));
-```
+- [ ] Pass all attributes to the Casts and Validators classes _(-> ToCast, -> Validator)_
 
 ### Tests
-  * [x] test cast attribute + visibility attribute
+* [x] Test cast attribute + visibility attribute
 
 ### Casts attributes: 
-  - [x] implement fallback value for all casts attributes,
-  * [ ] ToFloat,
-  - [ ] ToCast,
-  * [ ] ToPeriod(start_attribute_name, end_attribute_name)
+- [ ] Add from_timezone and to_timezone
+- [x] Implement fallback value for all casts attributes,
+* [ ] ToFloat,
+- [ ] ToInt
+- [ ] ToString
+- [ ] ToObject
+- [ ] ToCast,
 
 ### Validation attriubtes: 
-  * [x] IsPositive
-  - [ ] IsBetween
-  - [ ] IsNegative
+* [x] IsPositive
+- [x] IsNegative
+- [ ] Validator
 
  ___
 
@@ -61,14 +51,21 @@ Casts the input value when instanciating the class properties.
 | ArrayToCollection | Casts the attribute to a Collection | @dto (?class-string) |
 | ToDto | Casts the attribute to a Dto | @dto (class-string) |
 | ToEnum | Casts the attribute to enum | @enum (class-string) |
+| _ToInt_ | Casts the attribute to int | |
+| _ToFloat_ | Casts the attribute to float | |
+| _ToString_ | Casts the attribute to string | |
+| _ToObject_ | Casts the attribute to object | |
 
 ## Validators
 
 Validate the input values before class properties instanciation.
 
+Throws: ValidationException
+
 | Name | Description | Parameters |
 | --- | --- | --- |
 | IsPositive | The input value is positive | - |
+| IsNegative | The input value is negative | - |
 
 ## visibility
 
@@ -129,3 +126,6 @@ dump($dto->toArray());
 //     'lastname' => 'Doe',
 // ]
 ```
+
+See tests classes for more examples
+
