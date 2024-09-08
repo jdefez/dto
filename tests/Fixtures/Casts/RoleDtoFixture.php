@@ -1,16 +1,15 @@
 <?php
 
-namespace Ayctor\Tests\Samples;
+namespace Ayctor\Tests\Fixtures\Casts;
 
 use Ayctor\Dto\Concerns\IsDto;
 use Ayctor\Dto\Contracts\DtoContract;
 
-class RoleDto implements DtoContract
+class RoleDtoFixture implements DtoContract
 {
     use IsDto;
 
     public function __construct(
         public string $name,
-        public int $id,
     ) {}
 }
