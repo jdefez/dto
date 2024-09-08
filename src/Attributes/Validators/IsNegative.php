@@ -7,7 +7,7 @@ use Ayctor\Dto\Contracts\IsValidatorContract;
 use Ayctor\Dto\Exceptions\ValidationException;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
-class IsPositive implements IsValidatorContract
+class IsNegative implements IsValidatorContract
 {
     public function __construct(
     ) {}
@@ -17,9 +17,9 @@ class IsPositive implements IsValidatorContract
      */
     public function isValid(mixed $input, string $attribute): void
     {
-        if (! is_numeric($input) || $input < 0) {
+        if (! is_numeric($input) || $input > 0) {
             throw new ValidationException(
-                "The attribute $attribute must be positive '$input' given."
+                "The attribute $attribute must be negative '$input' given."
             );
         }
     }

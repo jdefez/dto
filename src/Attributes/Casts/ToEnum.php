@@ -22,6 +22,6 @@ class ToEnum implements IsCastContract
             return $this->default;
         }
 
-        return $this->enum::tryFrom($input);
+        return $this->enum::tryFrom($input) ?? $this->default;
     }
 }

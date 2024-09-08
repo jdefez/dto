@@ -2,17 +2,9 @@
 
 namespace Ayctor\Dto\Concerns;
 
-use Ayctor\Dto\Attributes\Casts\ArrayToCollection;
-use Ayctor\Dto\Attributes\Visibility\Hidden;
-use Ayctor\Dto\Attributes\Visibility\HiddenIfNull;
-use Ayctor\Dto\Attributes\Validators\IsPositive;
-use Ayctor\Dto\Attributes\Casts\StrToCarbon;
-use Ayctor\Dto\Attributes\Casts\ToDto;
-use Ayctor\Dto\Attributes\Casts\ToEnum;
 use Ayctor\Dto\Contracts\IsCastContract;
 use Ayctor\Dto\Contracts\IsValidatorContract;
 use Ayctor\Dto\Contracts\IsVisibilityContract;
-use Ayctor\Dto\Exceptions\ValidationException;
 use Illuminate\Support\Collection;
 use ReflectionAttribute;
 use ReflectionClass;
@@ -29,7 +21,7 @@ trait IsDto
     {
         $constructor = (new ReflectionClass(static::class))->getConstructor();
         $properties = $constructor->getParameters();
-        $keys = array_keys($attributes);
+        $keys = array_keys((array) $attributes);
         $args = [];
 
         foreach ($properties as $property) {
@@ -57,12 +49,13 @@ trait IsDto
         $properties = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
 
         foreach ($properties as $property) {
-            if ($this->propertyIsHidden($property)) {
+            $value = $property->getValue($this);
+
+            if ($this->propertyIsHidden($property, $value)) {
                 continue;
             }
 
             $name = $property->getName();
-            $value = $property->getValue($this);
 
             $return[$name] = $value;
         }
@@ -73,10 +66,14 @@ trait IsDto
     /**
      * @param  array<ReflectionAttribute>  $attributes
      */
-    private function propertyIsHidden(ReflectionProperty $property): bool
-    {
+    private function propertyIsHidden(
+        ReflectionProperty $property,
+        mixed $value
+    ): bool {
         return self::getAttributesByType($property, IsVisibilityContract::class)
-            ->isNotEmpty();
+            ->some(fn (ReflectionAttribute $attribute) => $attribute
+                ->newInstance()
+                ->shouldHide($value));
     }
 
     private static function handleCasts(
@@ -114,7 +111,7 @@ trait IsDto
     }
 
     /**
-     * @param class-string $type
+     * @param  class-string  $type
      * @return Collection<ReflectionAttribute>
      */
     private static function getAttributesByType(

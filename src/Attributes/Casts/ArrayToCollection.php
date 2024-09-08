@@ -27,7 +27,7 @@ class ArrayToCollection implements IsCastContract
      */
     public function format(mixed $input): ?Collection
     {
-        if (! $input || ! is_array($input)) {
+        if (! is_array($input)) {
             return $this->default;
         }
 
