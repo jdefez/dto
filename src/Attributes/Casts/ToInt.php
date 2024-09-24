@@ -6,25 +6,29 @@ use Attribute;
 use Ayctor\Dto\Contracts\IsCastContract;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
-class ToEnum implements IsCastContract
+class ToInt implements IsCastContract
 {
-    /**
-     * @param  class-string  $enum
-     */
     public function __construct(
-        public string $enum,
         public mixed $default = null,
     ) {}
 
     /**
      * @param  object|array<array-key, mixed>  $attributes
      */
-    public function format(mixed $input, object|array $attributes): mixed
+    public function format(mixed $input, object|array $attributes): ?float
     {
-        if (! $input) {
+        if (! $input || ! is_numeric($input)) {
             return $this->default;
         }
 
-        return $this->enum::tryFrom($input) ?? $this->default;
+        if (is_string($input)) {
+            return (int) $input;
+        }
+
+        if (is_float($input)) {
+            return (int) $input;
+        }
+
+        return $input;
     }
 }

@@ -21,11 +21,12 @@ class ArrayToCollection implements IsCastContract
     ) {}
 
     /**
+     * @param  object|array<array-key, mixed>  $attributes
      * @return ?Collection<int, mixed>
      *
      * @throws InvalidArgumentException
      */
-    public function format(mixed $input): ?Collection
+    public function format(mixed $input, object|array $attributes): ?Collection
     {
         if (! is_array($input)) {
             return $this->default;

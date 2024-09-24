@@ -51,10 +51,79 @@ Casts the input value when instanciating the class properties.
 | ArrayToCollection | Casts the attribute to a Collection | @dto (?class-string) |
 | ToDto | Casts the attribute to a Dto | @dto (class-string) |
 | ToEnum | Casts the attribute to enum | @enum (class-string) |
-| _ToInt_ | Casts the attribute to int | |
-| _ToFloat_ | Casts the attribute to float | |
-| _ToString_ | Casts the attribute to string | |
-| _ToObject_ | Casts the attribute to object | |
+| ToFloat | Casts the attribute to float | @precision (int) default = 1 |
+| ToInt | Casts the attribute to int | |
+| _ToString (?)_ | Casts the attribute to string | |
+| _ToObject (?)_ | Casts the attribute to object | |
+
+### Custom cats attributes
+
+You can also implement your custom casts attributes providing they implements the interface `IsCastContract`.
+
+#### Custom implementation
+
+```php
+<?php
+
+namespace App\Attributes;
+
+use Attribute;
+use Ayctor\Dto\Contracts\IsCastContract;
+
+#[Attribute(Attribute::TARGET_PARAMETER)]
+class FullnameCastAttribut implements IsCastContract
+{
+    public function __construct(
+        public mixed $default = null,
+    ) {}
+
+    /**
+     * @param  object|array<array-key, mixed>  $attributes
+     */
+    public function format(mixed $input, object|array $attributes): ?string
+    {
+        if (is_object($attributes)
+            && property_exists($attributes, 'firstname')
+            && property_exists($attributes, 'lastname')
+        ) {
+            return $attributes->firstname.' '.$attributes->lastname;
+        }
+
+        if (is_array($attributes)
+            && array_key_exists('firstname', $attributes)
+            && array_key_exists('lastname', $attributes)
+        ) {
+            return $attributes['firstname'].' '.$attributes['lastname'];
+        }
+
+        return $this->default;
+    }
+}
+```
+
+#### Usage:
+
+```php
+<?php
+
+namespace App\Dtos;
+
+use Ayctor\Dto\Concerns\IsDto;
+use Ayctor\Dto\Contracts\DtoContract;
+use App\Attributes\FullnameCastAttribut;
+
+final class CustomCastFixture implements DtoContract
+{
+    use IsDto;
+
+    public function __construct(
+        public string $firstname,
+        public string $lastname,
+        #[FullnameCastAttribut]
+        public string $fullname
+    ) {}
+}
+```
 
 ## Validators
 

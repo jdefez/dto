@@ -15,7 +15,10 @@ class StrToCarbon implements IsCastContract
         public mixed $default = null,
     ) {}
 
-    public function format(mixed $input): ?Carbon
+    /**
+     * @param  object|array<array-key, mixed>  $attributes
+     */
+    public function format(mixed $input, object|array $attributes): ?Carbon
     {
         if (! $input) {
             return $this->default;

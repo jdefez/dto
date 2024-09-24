@@ -30,7 +30,7 @@ trait IsDto
 
             self::handleValidations($property, $value);
 
-            $value = self::handleCasts($property, $value);
+            $value = self::handleCasts($property, $value, $attributes);
 
             $args[] = $value;
         }
@@ -78,10 +78,11 @@ trait IsDto
 
     private static function handleCasts(
         ReflectionParameter $parameter,
-        mixed $value
+        mixed $value,
+        object|array $attributes,
     ): mixed {
         foreach (self::getAttributesByType($parameter, IsCastContract::class) as $attribute) {
-            $value = $attribute->newInstance()->format($value);
+            $value = $attribute->newInstance()->format($value, $attributes);
         }
 
         return $value;

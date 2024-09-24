@@ -16,7 +16,10 @@ class ToDto implements IsCastContract
         public mixed $default = null,
     ) {}
 
-    public function format(mixed $input): mixed
+    /**
+     * @param  object|array<array-key, mixed>  $attributes
+     */
+    public function format(mixed $input, object|array $attributes): mixed
     {
         if (is_array($input) || is_object($input)) {
             return $this->dto::make($input);
