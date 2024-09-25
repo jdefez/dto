@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Tests\Unit;
+namespace Jdefez\Tests\Unit;
 
-use Ayctor\Tests\Fixtures\Visibility\HiddenFixture;
-use Ayctor\Tests\Fixtures\Visibility\HiddenIfNullFixture;
+use Jdefez\Tests\Fixtures\Visibility\HiddenFixture;
+use Jdefez\Tests\Fixtures\Visibility\HiddenIfNullFixture;
 
 it('Hidden always hides property', function () {
     $dto = HiddenFixture::make([

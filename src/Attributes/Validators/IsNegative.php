@@ -1,10 +1,10 @@
 <?php
 
-namespace Ayctor\Dto\Attributes\Validators;
+namespace Jdefez\Dto\Attributes\Validators;
 
 use Attribute;
-use Ayctor\Dto\Contracts\IsValidatorContract;
-use Ayctor\Dto\Exceptions\ValidationException;
+use Jdefez\Dto\Contracts\IsValidatorContract;
+use Jdefez\Dto\Exceptions\ValidationException;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
 class IsNegative implements IsValidatorContract

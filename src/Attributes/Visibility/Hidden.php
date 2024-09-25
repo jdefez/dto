@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Dto\Attributes\Visibility;
+namespace Jdefez\Dto\Attributes\Visibility;
 
 use Attribute;
-use Ayctor\Dto\Contracts\IsVisibilityContract;
+use Jdefez\Dto\Contracts\IsVisibilityContract;
 
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Hidden implements IsVisibilityContract

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Validators;
+namespace Jdefez\Tests\Fixtures\Validators;
 
-use Ayctor\Dto\Attributes\Validators\IsPositive;
-use Ayctor\Dto\Concerns\IsDto;
+use Jdefez\Dto\Attributes\Validators\IsPositive;
+use Jdefez\Dto\Concerns\IsDto;
 
 final class IsPositiveFixture
 {

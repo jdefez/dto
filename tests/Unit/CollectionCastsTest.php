@@ -1,10 +1,10 @@
 <?php
 
-namespace Ayctor\Tests\Unit;
+namespace Jdefez\Tests\Unit;
 
-use Ayctor\Tests\Fixtures\Casts\ArrayToCollectionFixture;
-use Ayctor\Tests\Fixtures\Casts\ArrayToCollectionOfDtoFixture;
-use Ayctor\Tests\Fixtures\Casts\RoleDtoFixture;
+use Jdefez\Tests\Fixtures\Casts\ArrayToCollectionFixture;
+use Jdefez\Tests\Fixtures\Casts\ArrayToCollectionOfDtoFixture;
+use Jdefez\Tests\Fixtures\Casts\RoleDtoFixture;
 use Illuminate\Support\Collection;
 use stdClass;
 

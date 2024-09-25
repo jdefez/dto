@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Dto\Attributes\Casts;
+namespace Jdefez\Dto\Attributes\Casts;
 
 use Attribute;
-use Ayctor\Dto\Contracts\IsCastContract;
+use Jdefez\Dto\Contracts\IsCastContract;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
 class ToEnum implements IsCastContract

@@ -21,10 +21,10 @@
 
 namespace App\Dtos;
 
-use Ayctor\Dto\Attributes\Hidden;
-use Ayctor\Dto\Attributes\HiddenIfNull;
-use Ayctor\Dto\Contracts\DtoContract;
-use Ayctor\Dto\Traits\IsDto;
+use Jdefez\Dto\Attributes\Hidden;
+use Jdefez\Dto\Attributes\HiddenIfNull;
+use Jdefez\Dto\Contracts\DtoContract;
+use Jdefez\Dto\Traits\IsDto;
 
 class UserDto implements DtoContract
 {
@@ -98,7 +98,7 @@ You can also implement your custom casts attributes providing they implements th
 namespace App\Attributes;
 
 use Attribute;
-use Ayctor\Dto\Contracts\IsCastContract;
+use Jdefez\Dto\Contracts\IsCastContract;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
 class FullnameCastAttribut implements IsCastContract
@@ -138,8 +138,8 @@ class FullnameCastAttribut implements IsCastContract
 
 namespace App\Dtos;
 
-use Ayctor\Dto\Concerns\IsDto;
-use Ayctor\Dto\Contracts\DtoContract;
+use Jdefez\Dto\Concerns\IsDto;
+use Jdefez\Dto\Contracts\DtoContract;
 use App\Attributes\FullnameCastAttribut;
 
 final class CustomCastFixture implements DtoContract

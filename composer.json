@@ -1,5 +1,5 @@
 {
-    "name": "ayctor/dto",
+    "name": "jdefez/dto",
     "type": "library",
     "require-dev": {
         "larastan/larastan": "^2.9",
@@ -10,7 +10,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ayctor\\Dto\\": "src/"
+            "Jdefez\\Dto\\": "src/"
         }
     },
     "require": {
@@ -25,7 +25,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Ayctor\\Tests\\": "tests/",
+            "Jdefez\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/",
             "Workbench\\Database\\Factories\\": "workbench/database/factories/",
             "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Casts;
+namespace Jdefez\Tests\Fixtures\Casts;
 
-use Ayctor\Dto\Attributes\Casts\ArrayToCollection;
-use Ayctor\Dto\Concerns\IsDto;
-use Ayctor\Dto\Contracts\DtoContract;
+use Jdefez\Dto\Attributes\Casts\ArrayToCollection;
+use Jdefez\Dto\Concerns\IsDto;
+use Jdefez\Dto\Contracts\DtoContract;
 use Illuminate\Support\Collection;
 
 final class ArrayToCollectionOfDtoFixture implements DtoContract

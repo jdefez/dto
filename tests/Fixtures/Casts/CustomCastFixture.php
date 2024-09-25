@@ -1,10 +1,10 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Casts;
+namespace Jdefez\Tests\Fixtures\Casts;
 
-use Ayctor\Dto\Concerns\IsDto;
-use Ayctor\Dto\Contracts\DtoContract;
-use Ayctor\Tests\Fixtures\Attributes\CustomCastAttribut;
+use Jdefez\Dto\Concerns\IsDto;
+use Jdefez\Dto\Contracts\DtoContract;
+use Jdefez\Tests\Fixtures\Attributes\CustomCastAttribut;
 
 final class CustomCastFixture implements DtoContract
 {

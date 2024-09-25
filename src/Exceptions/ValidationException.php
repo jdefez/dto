@@ -1,6 +1,6 @@
 <?php
 
-namespace Ayctor\Dto\Exceptions;
+namespace Jdefez\Dto\Exceptions;
 
 use InvalidArgumentException;
 

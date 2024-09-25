@@ -1,8 +1,8 @@
 <?php
 
-namespace Ayctor\Tests\Unit;
+namespace Jdefez\Tests\Unit;
 
-use Ayctor\Tests\Fixtures\Casts\CustomCastFixture;
+use Jdefez\Tests\Fixtures\Casts\CustomCastFixture;
 
 it('it can use custom cast', function () {
     $dto = CustomCastFixture::make([

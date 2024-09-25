@@ -1,8 +1,8 @@
 <?php
 
-namespace Ayctor\Dto\Contracts;
+namespace Jdefez\Dto\Contracts;
 
-use Ayctor\Dto\Exceptions\ValidationException;
+use Jdefez\Dto\Exceptions\ValidationException;
 
 interface IsValidatorContract
 {

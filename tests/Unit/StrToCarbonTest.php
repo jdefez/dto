@@ -1,8 +1,8 @@
 <?php
 
-namespace Ayctor\Tests\Unit;
+namespace Jdefez\Tests\Unit;
 
-use Ayctor\Tests\Fixtures\Casts\StrToCarbonFixture;
+use Jdefez\Tests\Fixtures\Casts\StrToCarbonFixture;
 use Carbon\Carbon;
 
 it('cast to carbon', function () {

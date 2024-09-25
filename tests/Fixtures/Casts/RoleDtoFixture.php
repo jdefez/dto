@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Casts;
+namespace Jdefez\Tests\Fixtures\Casts;
 
-use Ayctor\Dto\Concerns\IsDto;
-use Ayctor\Dto\Contracts\DtoContract;
+use Jdefez\Dto\Concerns\IsDto;
+use Jdefez\Dto\Contracts\DtoContract;
 
 class RoleDtoFixture implements DtoContract
 {

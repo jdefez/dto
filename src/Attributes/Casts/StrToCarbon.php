@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Dto\Attributes\Casts;
+namespace Jdefez\Dto\Attributes\Casts;
 
 use Attribute;
-use Ayctor\Dto\Contracts\IsCastContract;
+use Jdefez\Dto\Contracts\IsCastContract;
 use Carbon\Carbon;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]

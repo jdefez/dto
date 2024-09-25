@@ -1,10 +1,10 @@
 <?php
 
-namespace Ayctor\Tests\Unit;
+namespace Jdefez\Tests\Unit;
 
-use Ayctor\Dto\Exceptions\ValidationException;
-use Ayctor\Tests\Fixtures\Validators\IsNegativeFixture;
-use Ayctor\Tests\Fixtures\Validators\IsPositiveFixture;
+use Jdefez\Dto\Exceptions\ValidationException;
+use Jdefez\Tests\Fixtures\Validators\IsNegativeFixture;
+use Jdefez\Tests\Fixtures\Validators\IsPositiveFixture;
 
 it('IsPositive throws a validation exception', function (int|string $value) {
     IsPositiveFixture::make(['number' => $value]);

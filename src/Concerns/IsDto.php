@@ -1,10 +1,10 @@
 <?php
 
-namespace Ayctor\Dto\Concerns;
+namespace Jdefez\Dto\Concerns;
 
-use Ayctor\Dto\Contracts\IsCastContract;
-use Ayctor\Dto\Contracts\IsValidatorContract;
-use Ayctor\Dto\Contracts\IsVisibilityContract;
+use Jdefez\Dto\Contracts\IsCastContract;
+use Jdefez\Dto\Contracts\IsValidatorContract;
+use Jdefez\Dto\Contracts\IsVisibilityContract;
 use Illuminate\Support\Collection;
 use ReflectionAttribute;
 use ReflectionClass;

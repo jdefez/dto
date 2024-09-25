@@ -1,6 +1,6 @@
 <?php
 
-namespace Ayctor\Dto\Contracts;
+namespace Jdefez\Dto\Contracts;
 
 interface IsCastContract
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Tests\Unit;
+namespace Jdefez\Tests\Unit;
 
-use Ayctor\Tests\Fixtures\Casts\RoleDtoFixture;
-use Ayctor\Tests\Fixtures\Casts\ToDtoFixture;
+use Jdefez\Tests\Fixtures\Casts\RoleDtoFixture;
+use Jdefez\Tests\Fixtures\Casts\ToDtoFixture;
 
 it('casts to dto', function () {
     $dto = ToDtoFixture::make([

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Attributes;
+namespace Jdefez\Tests\Fixtures\Attributes;
 
 use Attribute;
-use Ayctor\Dto\Contracts\IsCastContract;
+use Jdefez\Dto\Contracts\IsCastContract;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
 class CustomCastAttribut implements IsCastContract

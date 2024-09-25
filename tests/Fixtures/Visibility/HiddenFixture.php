@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Visibility;
+namespace Jdefez\Tests\Fixtures\Visibility;
 
-use Ayctor\Dto\Attributes\Visibility\Hidden;
-use Ayctor\Dto\Concerns\IsDto;
+use Jdefez\Dto\Attributes\Visibility\Hidden;
+use Jdefez\Dto\Concerns\IsDto;
 
 final class HiddenFixture
 {

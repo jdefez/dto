@@ -1,10 +1,10 @@
 <?php
 
-namespace Ayctor\Dto\Attributes\Casts;
+namespace Jdefez\Dto\Attributes\Casts;
 
 use Attribute;
-use Ayctor\Dto\Contracts\DtoContract;
-use Ayctor\Dto\Contracts\IsCastContract;
+use Jdefez\Dto\Contracts\DtoContract;
+use Jdefez\Dto\Contracts\IsCastContract;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use ReflectionClass;

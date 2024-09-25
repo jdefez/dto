@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Validators;
+namespace Jdefez\Tests\Fixtures\Validators;
 
-use Ayctor\Dto\Attributes\Validators\IsNegative;
-use Ayctor\Dto\Concerns\IsDto;
+use Jdefez\Dto\Attributes\Validators\IsNegative;
+use Jdefez\Dto\Concerns\IsDto;
 
 final class IsNegativeFixture
 {

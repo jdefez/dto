@@ -1,10 +1,10 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Casts;
+namespace Jdefez\Tests\Fixtures\Casts;
 
-use Ayctor\Dto\Attributes\Casts\ToEnum;
-use Ayctor\Dto\Concerns\IsDto;
-use Ayctor\Dto\Contracts\DtoContract;
+use Jdefez\Dto\Attributes\Casts\ToEnum;
+use Jdefez\Dto\Concerns\IsDto;
+use Jdefez\Dto\Contracts\DtoContract;
 
 final class EnumFixture implements DtoContract
 {

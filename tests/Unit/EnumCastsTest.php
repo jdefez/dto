@@ -1,9 +1,9 @@
 <?php
 
-namespace Ayctor\Tests\Unit;
+namespace Jdefez\Tests\Unit;
 
-use Ayctor\Tests\Fixtures\Casts\EnumFixture;
-use Ayctor\Tests\Fixtures\Casts\StatusEnum;
+use Jdefez\Tests\Fixtures\Casts\EnumFixture;
+use Jdefez\Tests\Fixtures\Casts\StatusEnum;
 
 it('casts to enum', function () {
     $dto = EnumFixture::make([

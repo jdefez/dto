@@ -1,6 +1,6 @@
 <?php
 
-namespace Ayctor\Tests\Fixtures\Casts;
+namespace Jdefez\Tests\Fixtures\Casts;
 
 enum StatusEnum: string
 {
