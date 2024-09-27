@@ -17,20 +17,13 @@ class CustomCastAttribut implements IsCastContract
      */
     public function format(mixed $input, object|array $attributes): ?string
     {
-        if (is_object($attributes)
-            && property_exists($attributes, 'firstname')
-            && property_exists($attributes, 'lastname')
-        ) {
-            return $attributes->firstname.' '.$attributes->lastname;
+        $firstname = data_get($attributes, 'firstname');
+        $lastname = data_get($attributes, 'lastname');
+
+        if (! $firstname && ! $lastname) {
+            return $this->default;
         }
 
-        if (is_array($attributes)
-            && array_key_exists('firstname', $attributes)
-            && array_key_exists('lastname', $attributes)
-        ) {
-            return $attributes['firstname'].' '.$attributes['lastname'];
-        }
-
-        return $this->default;
+        return $firstname.' '.$lastname;
     }
 }
