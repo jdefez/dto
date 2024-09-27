@@ -9,9 +9,6 @@ use Jdefez\Dto\Exceptions\ValidationException;
 #[Attribute(Attribute::TARGET_PARAMETER)]
 class IsNegative implements IsValidatorContract
 {
-    public function __construct(
-    ) {}
-
     /**
      * @param  object|array<array-key, mixed>  $attributes
      *

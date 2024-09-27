@@ -9,9 +9,6 @@ use Jdefez\Dto\Contracts\IsVisibilityContract;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class Hidden implements IsVisibilityContract
 {
-    public function __construct(
-    ) {}
-
     public function shouldHide(mixed $value, DtoContract $dto): bool
     {
         return true;
