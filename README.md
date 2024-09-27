@@ -12,7 +12,9 @@
  1. [Casts Attributes](#casts-attributes)
   * [Custom casts Attributes](#custom-casts-attributes)
  2. [Validators Attributes](#validators-attributes)
+  * Todo: custom validators attribute doc
  3. [Visibility Attributes](#visibility-attributes)
+  * Todo: custom visibility attributes doc
 
 ## <a name="implementation"></a>Implementing a Dto
 
@@ -179,6 +181,8 @@ ___
 
 ### Tests
 * [x] Test cast attribute + visibility attribute
+- [ ] Test custom validators attributes
+- [ ] Test custom visibility attributes
 
 ### Casts attributes: 
 - [ ] Add from_timezone and to_timezone
@@ -186,11 +190,10 @@ ___
 * [x] ToFloat,
 - [x] ToInt
 - [ ] ToString
-- [ ] ToObject
+- [ ] ToObject (?)
 
 ### Validation attriubtes: 
 * [x] IsPositive
 - [x] IsNegative
-- [ ] Validator (custom validator ?) test + doc custom validator (with multiple attributes)
 
 ### Custom visibility attribute
