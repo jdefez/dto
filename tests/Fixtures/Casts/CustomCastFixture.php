@@ -14,6 +14,6 @@ final class CustomCastFixture implements DtoContract
         public string $firstname,
         public string $lastname,
         #[CustomCastAttribut]
-        public string $fullname
+        public ?string $fullname = null
     ) {}
 }

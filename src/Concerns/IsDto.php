@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Jdefez\Dto\Contracts\IsCastContract;
 use Jdefez\Dto\Contracts\IsValidatorContract;
 use Jdefez\Dto\Contracts\IsVisibilityContract;
+use Jdefez\Dto\Exceptions\MissingAttributeException;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
@@ -16,21 +17,25 @@ trait IsDto
 {
     /**
      * @param  object|array<array-key, mixed>  $attributes
+     *
+     * @throws MissingAttributeException
      */
     public static function make(object|array $attributes): static
     {
         $constructor = (new ReflectionClass(static::class))->getConstructor();
-        $properties = $constructor->getParameters();
+        $parameters = $constructor->getParameters();
         $keys = array_keys((array) $attributes);
         $args = [];
 
-        foreach ($properties as $property) {
-            $name = $property->getName();
-            $value = data_get($attributes, $name) ?? self::getPropertyDefaultValue($property);
+        self::validateAttributes($parameters, $keys);
 
-            self::handleValidations($property, $value, $attributes);
+        foreach ($parameters as $parameter) {
+            $name = $parameter->getName();
+            $value = data_get($attributes, $name) ?? self::getPropertyDefaultValue($parameter);
 
-            $value = self::handleCasts($property, $value, $attributes);
+            self::handleValidations($parameter, $value, $attributes);
+
+            $value = self::handleCasts($parameter, $value, $attributes);
 
             $args[] = $value;
         }
@@ -129,5 +134,28 @@ trait IsDto
             $type,
             ReflectionAttribute::IS_INSTANCEOF
         ));
+    }
+
+    /**
+     * @param  array<ReflectionParameter>  $properties
+     * @param  array<string>  $attribut_keys
+     *
+     * @throws MissingAttributeException
+     */
+    private static function validateAttributes(
+        array $properties,
+        array $attribut_keys
+    ): void {
+        $required = (new Collection($properties))
+            ->filter(fn (ReflectionParameter $property) => ! $property->isOptional())
+            ->map(fn (ReflectionParameter $property) => $property->getName());
+
+        if ($required->some(fn ($item) => ! in_array($item, $attribut_keys))) {
+            $missing = $required->diff($attribut_keys);
+
+            throw new MissingAttributeException(
+                "Missing attribute {$missing->join(', ', ' and ')}."
+            );
+        }
     }
 }
