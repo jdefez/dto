@@ -14,7 +14,7 @@
  2. [Validators Attributes](#validators-attributes)
   * Todo: custom validators attribute doc
  3. [Visibility Attributes](#visibility-attributes)
-  * Todo: custom visibility attributes doc
+  * Todo: custom visibility attributes doc + test
 
 ## <a name="implementation"></a>Implementing a Dto
 
@@ -195,5 +195,6 @@ ___
 ### Validation attriubtes: 
 * [x] IsPositive
 - [x] IsNegative
+- [x] CustomValidator
 
 ### Custom visibility attribute
