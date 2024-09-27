@@ -85,6 +85,9 @@ Casts the input value when instanciating the class properties.
 | ToEnum | Casts the attribute to enum | @enum (class-string) |
 | ToFloat | Casts the attribute to float | @precision (int) default = 1 |
 | ToInt | Casts the attribute to int | |
+| BetweenOr | Casts the attribute to number | @min (numeric) @max (numeric) @default |
+| LargerOr | Casts the attribute to number | @min (numeric) @default |
+| LessOr | Casts the attribute to number | @max (numeric) @default |
 | _ToString (?)_ | Casts the attribute to string | |
 | _ToObject (?)_ | Casts the attribute to object | |
 
@@ -160,6 +163,7 @@ Throws: ValidationException
 | --- | --- | --- |
 | IsPositive | The input value is positive | - |
 | IsNegative | The input value is negative | - |
+| IsBetween | The input value is between | @min (numeric) @max (numeric) |
 
 ## <a name="visibility-attributes"></a>3. Visibility attributes
 
