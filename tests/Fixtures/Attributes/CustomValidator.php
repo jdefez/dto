@@ -1,13 +1,14 @@
 <?php
 
-namespace Jdefez\Dto\Attributes\Validators;
+namespace Jdefez\Tests\Fixtures\Attributes;
 
 use Attribute;
+use Carbon\Carbon;
 use Jdefez\Dto\Contracts\IsValidatorContract;
 use Jdefez\Dto\Exceptions\ValidationException;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
-class IsNegative implements IsValidatorContract
+class CustomValidator implements IsValidatorContract
 {
     public function __construct(
     ) {}
@@ -22,10 +23,11 @@ class IsNegative implements IsValidatorContract
         string $attribute,
         array|object $attributes
     ): void {
-        if (! is_numeric($input) || $input > 0) {
-            throw new ValidationException(
-                "The attribute $attribute must be negative '$input' given."
-            );
+        $start_at = Carbon::parse(data_get($attributes, 'start_at'));
+        $end_at = Carbon::parse(data_get($attributes, 'end_at'));
+
+        if (! $start_at->isBefore($end_at)) {
+            throw new ValidationException('Invalid start_at and end_at dates.');
         }
     }
 }

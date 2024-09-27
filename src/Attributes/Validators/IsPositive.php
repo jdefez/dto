@@ -1,6 +1,6 @@
 <?php
 
-namespace Jdefez\Dto\Attributes\Validators;
+namespace Jdefez\Dto\Attributes;
 
 use Attribute;
 use Jdefez\Dto\Contracts\IsValidatorContract;
@@ -13,14 +13,14 @@ class IsPositive implements IsValidatorContract
     ) {}
 
     /**
-     * @param  object|array<array-key, mixed>  $Attributes
+     * @param  object|array<array-key, mixed>  $attributes
      *
      * @throws ValidationException
      */
     public function isValid(
         mixed $input,
         string $attribute,
-        object|array $Attributes
+        object|array $attributes
     ): void {
         if (! is_numeric($input) || $input < 0) {
             throw new ValidationException(
