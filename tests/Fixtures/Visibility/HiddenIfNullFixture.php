@@ -4,8 +4,9 @@ namespace Jdefez\Tests\Fixtures\Visibility;
 
 use Jdefez\Dto\Attributes\Visibility\HiddenIfNull;
 use Jdefez\Dto\Concerns\IsDto;
+use Jdefez\Dto\Contracts\DtoContract;
 
-final class HiddenIfNullFixture
+final class HiddenIfNullFixture implements DtoContract
 {
     use IsDto;
 

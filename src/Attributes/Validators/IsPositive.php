@@ -13,10 +13,15 @@ class IsPositive implements IsValidatorContract
     ) {}
 
     /**
+     * @param  object|array<array-key, mixed>  $Attributes
+     *
      * @throws ValidationException
      */
-    public function isValid(mixed $input, string $attribute): void
-    {
+    public function isValid(
+        mixed $input,
+        string $attribute,
+        object|array $Attributes
+    ): void {
         if (! is_numeric($input) || $input < 0) {
             throw new ValidationException(
                 "The attribute $attribute must be positive '$input' given."

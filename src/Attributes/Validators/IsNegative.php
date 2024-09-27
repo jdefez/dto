@@ -13,10 +13,15 @@ class IsNegative implements IsValidatorContract
     ) {}
 
     /**
+     * @param  object|array<array-key, mixed>  $Attributes
+     *
      * @throws ValidationException
      */
-    public function isValid(mixed $input, string $attribute): void
-    {
+    public function isValid(
+        mixed $input,
+        string $attribute,
+        array|object $Attributes
+    ): void {
         if (! is_numeric($input) || $input > 0) {
             throw new ValidationException(
                 "The attribute $attribute must be negative '$input' given."

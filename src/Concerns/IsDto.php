@@ -2,10 +2,10 @@
 
 namespace Jdefez\Dto\Concerns;
 
+use Illuminate\Support\Collection;
 use Jdefez\Dto\Contracts\IsCastContract;
 use Jdefez\Dto\Contracts\IsValidatorContract;
 use Jdefez\Dto\Contracts\IsVisibilityContract;
-use Illuminate\Support\Collection;
 use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionException;
@@ -28,7 +28,7 @@ trait IsDto
             $name = $property->getName();
             $value = data_get($attributes, $name) ?? self::getPropertyDefaultValue($property);
 
-            self::handleValidations($property, $value);
+            self::handleValidations($property, $value, $attributes);
 
             $value = self::handleCasts($property, $value, $attributes);
 
@@ -73,7 +73,7 @@ trait IsDto
         return self::getAttributesByType($property, IsVisibilityContract::class)
             ->some(fn (ReflectionAttribute $attribute) => $attribute
                 ->newInstance()
-                ->shouldHide($value));
+                ->shouldHide($value, $this));
     }
 
     private static function handleCasts(
@@ -88,16 +88,22 @@ trait IsDto
         return $value;
     }
 
+    /**
+     * @param  object|array<array-key, mixed>  $attributes
+     */
     private static function handleValidations(
         ReflectionParameter $parameter,
-        mixed $value
+        mixed $value,
+        object|array $attributes,
     ): void {
 
         foreach (self::getAttributesByType($parameter, IsValidatorContract::class) as $attribute) {
-            $attribute->newInstance()->isValid(
-                $value,
-                $parameter->getName()
-            );
+            $attribute->newInstance()
+                ->isValid(
+                    $value,
+                    $parameter->getName(),
+                    $attributes
+                );
         }
     }
 
