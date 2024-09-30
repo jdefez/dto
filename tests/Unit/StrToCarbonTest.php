@@ -2,8 +2,8 @@
 
 namespace Jdefez\Tests\Unit;
 
-use Jdefez\Tests\Fixtures\Casts\StrToCarbonFixture;
 use Carbon\Carbon;
+use Jdefez\Tests\Fixtures\Casts\StrToCarbonFixture;
 
 it('cast to carbon', function () {
     $dto = StrToCarbonFixture::make(['date' => '01/01/2021']);

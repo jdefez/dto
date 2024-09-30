@@ -2,10 +2,10 @@
 
 namespace Jdefez\Tests\Unit;
 
+use Illuminate\Support\Collection;
 use Jdefez\Tests\Fixtures\Casts\ArrayToCollectionFixture;
 use Jdefez\Tests\Fixtures\Casts\ArrayToCollectionOfDtoFixture;
 use Jdefez\Tests\Fixtures\Casts\RoleDtoFixture;
-use Illuminate\Support\Collection;
 use stdClass;
 
 it('should cast array to collection', function () {

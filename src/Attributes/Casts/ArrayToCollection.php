@@ -3,10 +3,10 @@
 namespace Jdefez\Dto\Attributes\Casts;
 
 use Attribute;
-use Jdefez\Dto\Contracts\DtoContract;
-use Jdefez\Dto\Contracts\IsCastContract;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
+use Jdefez\Dto\Contracts\DtoContract;
+use Jdefez\Dto\Contracts\IsCastContract;
 use ReflectionClass;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]

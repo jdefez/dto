@@ -3,8 +3,8 @@
 namespace Jdefez\Dto\Attributes\Casts;
 
 use Attribute;
-use Jdefez\Dto\Contracts\IsCastContract;
 use Carbon\Carbon;
+use Jdefez\Dto\Contracts\IsCastContract;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
 class StrToCarbon implements IsCastContract

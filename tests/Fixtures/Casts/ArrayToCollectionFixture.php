@@ -2,10 +2,10 @@
 
 namespace Jdefez\Tests\Fixtures\Casts;
 
+use Illuminate\Support\Collection;
 use Jdefez\Dto\Attributes\Casts\ArrayToCollection;
 use Jdefez\Dto\Concerns\IsDto;
 use Jdefez\Dto\Contracts\DtoContract;
-use Illuminate\Support\Collection;
 
 final class ArrayToCollectionFixture implements DtoContract
 {
